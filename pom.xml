@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.github.zhanghr</groupId>
 	<artifactId>utils</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 	<name>zhanghr</name>
 	<description>zhanghr's utils</description>
 	<url>https://github.com/zhanghr/OSSRH-49683</url>
@@ -18,6 +18,8 @@
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
+	
+	
 	
 	<licenses>
         <license>
@@ -58,21 +60,38 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework.data</groupId>
+		    <artifactId>spring-data-redis</artifactId>
+		</dependency>
 	</dependencies>
 	<!-- 使用个人资料：由于生成javadoc和源jar以及使用GPG签署组件是一个相当耗时的过程，因此这些执行通常与正常的构建配置隔离并移动到配置文件中。然后，在通过激活配置文件执行部署时，将使用此配置文件。 -->
 	 <profiles>
+	 
+    <profile>
+        <id>disable-javadoc-doclint</id>
+        <activation>
+            <jdk>[1.8,)</jdk>
+        </activation>
+        <properties>
+            <additionalparam>-Xdoclint:none</additionalparam>
+        </properties>
+    </profile>
+	 
         <profile>
            <id>ossrh</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
             <build>
+            <pluginManagement>
                   <plugins>
                   <!-- 要生成Javadoc和Source jar文件，您必须配置javadoc和源Maven插件 -->
                      <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
-                        <version>2.2.1</version>
+                        <version>3.2.1</version>
                         <executions>
                             <execution>
                                 <phase>package</phase>
@@ -84,27 +103,21 @@
                     </plugin>
                     
                      <!-- Javadoc -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>2.9.1</version>
-                        <configuration>
-                            <show>private</show>
-                            <nohelp>true</nohelp>
-                                    <charset>UTF-8</charset>
-                <encoding>UTF-8</encoding>
-                <docencoding>UTF-8</docencoding>
-                <additionalparam>-Xdoclint:none</additionalparam>  <!-- TODO 临时解决不规范的javadoc生成报错,后面要规范化后把这行去掉 -->
-            </configuration>
-                        <executions>
-                            <execution>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
+               <plugin>
+				 <groupId>org.apache.maven.plugins</groupId>
+				 <artifactId>maven-javadoc-plugin</artifactId>
+				 <executions>
+				 <execution>
+				 <id>disable-javadoc-doclint</id>
+				 <goals>
+				 <goal>jar</goal>
+				 </goals>
+				 <configuration> 
+				 <additionalparam>-Xdoclint:none</additionalparam>
+				 </configuration>
+				 </execution>
+				 </executions>
+				</plugin>
                     
                     
                     
@@ -160,6 +173,7 @@
                      
                     
                   </plugins>
+                  </pluginManagement>
             </build>
             <!-- 【注】snapshotRepository 与 repository 中的 id 一定要与 setting.xml 中 server 的 id 保持一致！ -->
 		    <distributionManagement>
@@ -175,14 +189,5 @@
         </profile>
     </profiles>
 
-	<!-- <build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-                    
-		</plugins>
-	</build> -->
 
 </project>
