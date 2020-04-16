@@ -1,4 +1,4 @@
-package com.zhanghr.util;
+package com.zhanghr.util.redis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.DataType;
@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
  * @version 1.1 (GitHub文档: https://github.com/whvcse/RedisUtil )
  */
 @Component
-public class RedisUtil {
+public class MyRedisUtil {
 	
 	
 	@Autowired
