@@ -11,13 +11,14 @@
 	</parent>
 	<groupId>com.github.zhanghr</groupId>
 	<artifactId>utils</artifactId>
-	<version>0.0.2</version>
+	<version>0.0.5</version>
 	<name>zhanghr</name>
 	<description>zhanghr's utils</description>
 	<url>https://github.com/zhanghr/OSSRH-49683</url>
 
 	<properties>
 		<java.version>1.8</java.version>
+		<maven-jar-plugin.version>3.0.0</maven-jar-plugin.version>
 	</properties>
 
 
@@ -62,10 +63,45 @@
 			</exclusions>
 		</dependency>
 
+		<!--redis依赖配置-->
 		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-redis</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-pool2</artifactId>
+			<version>2.4.3</version>
+		</dependency>
+
+		<!-- zookeeper依赖 -->
+		<dependency>
+			<groupId>org.apache.zookeeper</groupId>
+			<artifactId>zookeeper</artifactId>
+			<version>3.4.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.curator</groupId>
+			<artifactId>curator-recipes</artifactId>
+			<version>2.9.1</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <scope>provided</scope>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+			<dependency>
+			    <groupId>com.fasterxml.jackson.core</groupId>
+			    <artifactId>jackson-databind</artifactId>
+			    <version>2.10.3</version>
+			</dependency>
+		
+		
+
 	</dependencies>
 	<!-- 使用个人资料：由于生成javadoc和源jar以及使用GPG签署组件是一个相当耗时的过程，因此这些执行通常与正常的构建配置隔离并移动到配置文件中。然后，在通过激活配置文件执行部署时，将使用此配置文件。 -->
 	<profiles>
